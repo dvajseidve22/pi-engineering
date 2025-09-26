@@ -7,10 +7,12 @@ body {
 .bg-color {
   background-color: #4c5dc3;
 }
+
 .logo{
   height: 150px !important;
   width: 350px !important;
 }
+
 .navbar-toggler {
   border-color: #fff; 
 }
@@ -156,7 +158,6 @@ body {
   opacity: 1;
   transform: translateX(0);
 }
-
 
 
 
