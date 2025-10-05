@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="de-CH">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Auto</title>
+
+    <!-- Bootstrap -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      crossorigin="anonymous"
+    />
+    <!-- Твојот CSS -->
+    <link rel="stylesheet" href="../styling/auto.css" />
+  </head>
+
+  <body>
+    <!-- Navbar (оставен како кај тебе) -->
+    <nav class="navbar navbar-expand-lg bg-color py-3">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="index.html">
+          <img src="./images/logo.jpg" alt="Logo" class="logo" />
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav mx-auto">
+            <li class="nav-item mx-2">
+              <a class="nav-link styled-nav" href="#">Verglasung</a>
+            </li>
+            <li class="nav-item mx-2">
+              <a class="nav-link styled-nav" href="#">Holz</a>
+            </li>
+            <li class="nav-item mx-2">
+              <a class="nav-link styled-nav" href="#">Laser</a>
+            </li>
+            <li class="nav-item mx-2">
+              <a class="nav-link styled-nav" href="auto.html">Auto</a>
+            </li>
+          </ul>
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link styled-nav btn-contact" href="#">Kontakt</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container-fluid section2"></div>
+
+    <!-- Lead text -->
+    <div class="container my-5">
+      <div class="row justify-content-center">
+        <div class="col-lg-8 text-center">
+          <h2 class="service-title mb-4">
+            Buchen Sie Ihren Wartungstermin in unserer Werkstatt
+          </h2>
+          <p class="service-text">
+            Vereinbaren Sie eine Diagnose und Reparatur für Ihr Fahrzeug. Wir
+            bieten zudem eine professionelle Fahrzeugvorbereitung für die MFK
+            an. Kaufen, verkaufen oder tauschen Sie Ihr Gebrauchtfahrzeug mit
+            uns.
+          </p>
+          <p class="service-cta mt-4">
+            <strong
+              >Fragen Sie den Preis an und buchen Sie Ihren nächsten Termin noch
+              heute!</strong
+            >
+          </p>
+          <a href="#kontakt" class="btn btn-primary btn-lg mt-3"
+            >Termin buchen</a
+          >
+        </div>
+      </div>
+    </div>
+
+    <!-- Listings -->
+    <div class="container mt-4 py-4 my-5">
+      <div id="posts"></div>
+    </div>
+
+    <!-- Modal (Slider + Beschreibung) -->
+    <div class="modal fade" id="postModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modalTitle"></h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Schliessen"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <div class="row g-4">
+              <div class="col-12 col-lg-7">
+                <div
+                  id="postCarousel"
+                  class="carousel slide"
+                  data-bs-ride="false"
+                >
+                  <div id="carouselInner" class="carousel-inner"></div>
+                  <button
+                    class="carousel-control-prev"
+                    type="button"
+                    data-bs-target="#postCarousel"
+                    data-bs-slide="prev"
+                  >
+                    <span
+                      class="carousel-control-prev-icon"
+                      aria-hidden="true"
+                    ></span>
+                    <span class="visually-hidden">Zurück</span>
+                  </button>
+                  <button
+                    class="carousel-control-next"
+                    type="button"
+                    data-bs-target="#postCarousel"
+                    data-bs-slide="next"
+                  >
+                    <span
+                      class="carousel-control-next-icon"
+                      aria-hidden="true"
+                    ></span>
+                    <span class="visually-hidden">Weiter</span>
+                  </button>
+                  <div
+                    id="carouselIndicators"
+                    class="carousel-indicators mt-3"
+                  ></div>
+                </div>
+              </div>
+              <div class="col-12 col-lg-5">
+                <div class="small text-muted" id="modalMeta"></div>
+                <p id="modalDesc" class="mt-2 mb-0"></p>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-primary" data-bs-dismiss="modal">OK</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer py-3">
+      <div class="container mt-5">
+        <div class="row">
+          <div class="col-md-4 footer-logo mx-auto">
+            <img
+              src="./images/logo.jpg"
+              alt="PI Engineering Logo"
+              class="footer-logo mb-3"
+            />
+          </div>
+          <div class="col-md-4 mb-4">
+            <h5 class="footer-title">PI Engineering GmbH</h5>
+            <p>Neumattstrasse 50<br />2562 Port</p>
+          </div>
+          <div class="col-md-4 mb-4">
+            <h5 class="footer-title">Kontakt</h5>
+            <p>
+              +41 79 584 15 27<br />
+              <a href="mailto:info@pi-engineering.ch" class="footer-link"
+                >info@pi-engineering.ch</a
+              >
+            </p>
+          </div>
+        </div>
+        <div class="text-center mt-3">
+          <small
+            >&copy; 2025 PI Engineering GmbH. Alle Rechte vorbehalten.</small
+          >
+        </div>
+      </div>
+    </footer>
+
+    <!-- Bootstrap bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Supabase + Listing/Modal logic -->
+    <script type="module">
+      import { supabase } from "./supabase-config.js";
+
+      const postsDiv = document.getElementById("posts");
+
+      // Modal refs
+      const modalEl = document.getElementById("postModal");
+      const modalTitle = document.getElementById("modalTitle");
+      const modalDesc = document.getElementById("modalDesc");
+      const modalMeta = document.getElementById("modalMeta");
+      const carouselInner = document.getElementById("carouselInner");
+      const carouselIndicators = document.getElementById("carouselIndicators");
+
+      function deCH(n) {
+        if (n == null || n === "") return "";
+        const num = Number(String(n).replace(/[^0-9.-]/g, ""));
+        return Number.isFinite(num)
+          ? new Intl.NumberFormat("de-CH").format(num)
+          : String(n);
+      }
+      function escapeHtml(s) {
+        return String(s ?? "").replace(
+          /[&<>\"']/g,
+          (c) =>
+            ({
+              "&": "&amp;",
+              "<": "&lt;",
+              ">": "&gt;",
+              '"': "&quot;",
+              "'": "&#39;",
+            }[c])
+        );
+      }
+
+      async function loadPosts() {
+        const { data: posts, error } = await supabase
+          .from("posts")
+          .select("*")
+          .order("id", { ascending: false });
+
+        if (error) {
+          postsDiv.innerHTML =
+            '<div class="alert alert-danger">' +
+            escapeHtml(error.message) +
+            "</div>";
+          return;
+        }
+
+        postsDiv.innerHTML = `
+          <div class="row g-4">
+            ${posts
+              .map((p) => {
+                const images = Array.isArray(p.images)
+                  ? p.images
+                  : p.images
+                  ? [p.images]
+                  : p.image
+                  ? [p.image]
+                  : [];
+                const firstImg = images[0] || "./images/logo.jpg";
+                const km = p.km ?? p.KM ?? null;
+                const year = p.year ?? p.YEAR ?? null;
+                const price = p.price ?? p.PRICE ?? null;
+
+                const dataImages = encodeURIComponent(JSON.stringify(images));
+                const displayPrice = price ? "CHF " + escapeHtml(price) : "";
+                const meta = `${year ? year : ""}${year && km ? " | " : ""}${
+                  km ? deCH(km) + " km" : ""
+                }`;
+
+                return `
+                <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
+                  <div class="ad-card"
+                       data-images="${dataImages}"
+                       data-title="${escapeHtml(p.title)}"
+                       data-desc="${escapeHtml(p.description ?? "")}"
+                       data-year="${year ?? ""}"
+                       data-km="${km ?? ""}"
+                       data-price="${escapeHtml(price ?? "")}">
+                    <img src="${firstImg}" class="ad-img" alt="${escapeHtml(
+                  p.title
+                )}" />
+                    <div class="ad-body">
+                      <h3 class="ad-title">${escapeHtml(p.title)}</h3>
+                      ${
+                        displayPrice
+                          ? `<div class="ad-price">${displayPrice}</div>`
+                          : ``
+                      }
+                      ${meta ? `<div class="ad-meta">${meta}</div>` : ``}
+                      ${
+                        p.description
+                          ? `<p class="ad-desc">${escapeHtml(
+                              p.description
+                            )}</p>`
+                          : ``
+                      }
+                      <button class="btn btn-primary ad-btn">Mehr anzeigen</button>
+                    </div>
+                  </div>
+                </div>`;
+              })
+              .join("")}
+          </div>`;
+      }
+
+      // Click handler: open modal & build carousel (картичка или „Mehr anzeigen“)
+      postsDiv.addEventListener("click", (e) => {
+        const card = e.target.closest(".ad-card");
+        if (!card) return; // клик надвор од картичка
+
+        const title = card.dataset.title || "";
+        const desc = card.dataset.desc || "";
+        const year = card.dataset.year || "";
+        const km = card.dataset.km || "";
+        const price = card.dataset.price || "";
+
+        let images = [];
+        try {
+          images = JSON.parse(decodeURIComponent(card.dataset.images || "[]"));
+        } catch {
+          images = [];
+        }
+
+        // Fill modal
+        modalTitle.textContent = title;
+        modalDesc.textContent = desc;
+
+        const kmText = km ? `${deCH(km)} km` : "-";
+        modalMeta.innerHTML = `
+          <div class="meta-line"><span class="meta-label">Jahr:</span> <strong>${
+            year || "-"
+          }</strong></div>
+          <div class="meta-line"><span class="meta-label">KM:</span> <strong>${kmText}</strong></div>
+          <div class="meta-line"><span class="meta-label">Preis:</span> <strong>${
+            price || "-"
+          }</strong></div>
+        `;
+
+        // Carousel
+        carouselInner.innerHTML = "";
+        carouselIndicators.innerHTML = "";
+        images = images.length ? images : ["./images/logo.jpg"];
+
+        images.forEach((url, idx) => {
+          const active = idx === 0 ? "active" : "";
+          carouselInner.insertAdjacentHTML(
+            "beforeend",
+            `<div class="carousel-item ${active}">
+               <img src="${url}" class="d-block w-100" alt="">
+             </div>`
+          );
+          carouselIndicators.insertAdjacentHTML(
+            "beforeend",
+            `<button type="button"
+                    data-bs-target="#postCarousel"
+                    data-bs-slide-to="${idx}"
+                    class="${active}"
+                    aria-current="${active ? "true" : "false"}"
+                    aria-label="Slide ${idx + 1}"></button>`
+          );
+        });
+
+        new bootstrap.Modal(modalEl).show();
+      });
+
+      modalEl.addEventListener("hidden.bs.modal", () => {
+        carouselInner.innerHTML = "";
+        carouselIndicators.innerHTML = "";
+      });
+
+      // Realtime refresh
+      supabase
+        .channel("public:posts")
+        .on(
+          "postgres_changes",
+          { event: "*", schema: "public", table: "posts" },
+          loadPosts
+        )
+        .subscribe();
+
+      loadPosts();
+    </script>
+
+    <!-- (опц.) Bootstrap Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+    />
+  </body>
+</html>
