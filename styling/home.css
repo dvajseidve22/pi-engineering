@@ -57,6 +57,86 @@ body {
   justify-content: space-between; 
 }
 
+/* ===== MOBILE NAVBAR ONLY (<= lg) ===== */
+@media (max-width: 991.98px) {
+  .navbar-brand .logo {
+    height: 56px !important;
+    width: auto !important;
+  }
+
+
+  .navbar img {
+    height: auto !important;
+    width: auto !important;
+  }
+
+
+  .navbar-toggler {
+    padding: .25rem .5rem;
+    border-color: #ececee;
+    background: rgba(255,255,255,0.08);
+    border-radius: 10px;
+    box-shadow: none !important;
+  }
+  .navbar-toggler:focus { box-shadow: none !important; }
+
+  .navbar .container-fluid {
+    align-items: center;
+    justify-content: space-between;
+    gap: .75rem;
+  }
+
+
+  .navbar-collapse {
+    padding-top: .5rem;
+  }
+
+  
+  .navbar-nav .nav-item { margin: .25rem 0; }
+
+  .styled-nav {
+    display: block;
+    width: 100%;
+    min-width: 0;            
+    font-size: 18px;
+    padding: 10px 14px;
+    border: 1px solid #ececee;
+    border-radius: 12px;
+    color: #ececee !important;
+    background: transparent;
+    text-align: left;        
+    /* гаси анимации/scale за мобилен */
+    transition: none !important;
+    transform: none !important;
+    box-shadow: none !important;
+    letter-spacing: 0 !important;
+    font-weight: 500;
+  }
+
+  .styled-nav:hover,
+  .styled-nav:active,
+  .styled-nav:focus {
+    background: rgba(255,255,255,0.08);
+    color: #ececee !important;
+    border-color: #ececee;
+    transition: none !important;
+    transform: none !important;
+    box-shadow: none !important;
+    letter-spacing: 0 !important;
+  }
+
+  /* „Kontakt“ копчето во истиот стил */
+  .btn-contact {
+    border: 1px solid #ececee !important;
+    color: #ececee !important;
+    background: transparent !important;
+    width: 100%;
+    border-radius: 12px;
+    padding: 10px 14px;
+  }
+}
+
+
 /* img */       
 .container-fluid.section2 {
     width: 100%; 
@@ -160,7 +240,6 @@ body {
 }
 
 
-
 /* Footer */
 .footer {
     background-color: #4c5dc3;
@@ -189,4 +268,54 @@ body {
     height: 150px; 
     width: 300px;
      border-radius: 10px;
+}
+
+/* ===== MOBILE FOOTER ONLY (<= lg) ===== */
+@media (max-width: 991.98px) {
+  footer.footer {
+    border-top: 1px solid #ececee;
+    padding-top: 1rem;              
+  }
+  footer.footer .container {
+    margin-top: 1.5rem !important;  
+  }
+
+  /* центрирај сѐ и нареди ги блоковите еден под друг */
+  footer.footer .row > [class*="col-"] {
+    text-align: center;
+    margin-bottom: .75rem;
+  }
+
+  /* лого – помало и флексибилно */
+  footer.footer .footer-logo img,
+  footer.footer img.footer-logo {
+    height: 56px;
+    width: auto;
+    border-radius: 10px;
+  }
+
+  /* наслови и линкови со твоите бои */
+  footer.footer .footer-title {
+    color: #4c5dc3;
+    margin-bottom: .25rem;
+    font-weight: 700;
+  }
+  footer.footer .footer-link {
+    color: #4c5dc3;
+    text-decoration: none;
+  }
+  footer.footer .footer-link:hover {
+    text-decoration: underline;
+  }
+
+  /* текст/телефон – чист распоред и читливост */
+  footer.footer p {
+    margin-bottom: .25rem;
+  }
+
+  /* © линија – малку простор и центар */
+  footer.footer .text-center small {
+    display: inline-block;
+    margin-top: .5rem;
+  }
 }

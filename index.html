@@ -11,31 +11,31 @@
       crossorigin="anonymous"
     />
     <link rel="stylesheet" href="./styling/home.css">
-    
+    <link rel="icon" href="./images/logo.jpg" sizes="16x16" type="image/png">
   </head>
   <body>
 <nav class="navbar navbar-expand-lg bg-color py-3">
   <div class="container-fluid">
-    <!-- Logo -->
+
     <a class="navbar-brand" href="#">
       <img src="./images/logo.jpg" alt="Logo" class="logo">
     </a>
-    <!-- Hamburger -->
+
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
       aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <!-- Links -->
+
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav mx-auto">
         <li class="nav-item mx-2">
-          <a class="nav-link styled-nav" href="#">Verglasung</a>
+          <a class="nav-link styled-nav" href="verglasung.html">Verglasung</a>
         </li>
         <li class="nav-item mx-2">
-          <a class="nav-link styled-nav" href="#">Holz</a>
+          <a class="nav-link styled-nav" href="holz.html">Holz</a>
         </li>
         <li class="nav-item mx-2">
-          <a class="nav-link styled-nav" href="#">Laser</a>
+          <a class="nav-link styled-nav" href="laser.html">Laser</a>
         </li>
         <li class="nav-item mx-2">
           <a class="nav-link styled-nav" href="auto.html">Auto</a>
@@ -43,7 +43,7 @@
       </ul>
       <ul class="navbar-nav ms-auto">
         <li class="nav-item">
-          <a class="nav-link styled-nav btn-contact" href="#">Kontakt</a>
+          <a class="nav-link styled-nav btn-contact" href="#kontakt">Kontakt</a>
         </li>
       </ul>
     </div>
@@ -69,7 +69,7 @@
  <div class="container-fluid my-3 ">
   <div class="row justify-content-center py-5 my-5">
     <div class="col-lg-2 col-md-4 col-sm-6 mb-4">
-      <div class="card from-left">
+      <div class="card from-right" onclick="window.location.href='verglasung.html'" style="cursor:pointer;">
         <img src="./images/Slika 1.png" class="card-img-top" alt="...">
         <div class="card-body">
           <p class="card-text">Verglasung</p>
@@ -78,7 +78,7 @@
     </div>
 
     <div class="col-lg-2 col-md-4 col-sm-6 mb-4">
-      <div class="card from-left">
+       <div class="card from-left" onclick="window.location.href='verglasung.html'" style="cursor:pointer;">
         <img src="./images/Slika 2.png" class="card-img-top" alt="...">
         <div class="card-body">
           <p class="card-text">Holz</p>
@@ -87,7 +87,7 @@
     </div>
 
     <div class="col-lg-2 col-md-4 col-sm-6 mb-4">
-      <div class="card from-right">
+      <div class="card from-right" onclick="window.location.href='laser.html'" style="cursor:pointer;">
         <img src="./images/Slika 3.png" class="card-img-top" alt="...">
         <div class="card-body">
           <p class="card-text">Laser</p>
@@ -109,7 +109,7 @@
 </div>
 
  <!-- Footer -->
-<footer class="footer py-3">
+<footer class="footer py-3" id="kontakt">
   <div class="container mt-5">
          <div class="row">
       <div class="col-md-4 footer-logo mx-auto">

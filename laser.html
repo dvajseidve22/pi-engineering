@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="de-CH">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PI-ENGINEERING</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="./styling/laser.css">
+     <link rel="icon" href="./images/logo.jpg" sizes="16x16" type="image/png">
+  </head>
+  <body>
+<nav class="navbar navbar-expand-lg bg-color py-3">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">
+      <img src="./images/logo.jpg" alt="Logo" class="logo">
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav mx-auto">
+        <li class="nav-item mx-2">
+          <a class="nav-link styled-nav" href="verglasung.html">Verglasung</a>
+        </li>
+        <li class="nav-item mx-2">
+          <a class="nav-link styled-nav" href="holz.html">Holz</a>
+        </li>
+        <li class="nav-item mx-2">
+          <a class="nav-link styled-nav" href="laser.html">Laser</a>
+        </li>
+        <li class="nav-item mx-2">
+          <a class="nav-link styled-nav" href="auto.html">Auto</a>
+        </li>
+      </ul>
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <a class="nav-link styled-nav btn-contact" href="#kontakt">Kontakt</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+   
+  
+<!-- ===== LASER: HERO ===== -->
+<section class="container py-4">
+  <div class="row align-items-center">
+    <div class="col-lg-8">
+      <h1 class="display-6 fw-bold text-brand mb-2">Lasergravur</h1>
+      <p class="lead mb-0">Lasergravur auf verschiedenen Metallen.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== LASER: GRID (flip cards) ===== -->
+<section class="container pb-5">
+  <div id="laserGrid" class="row g-3"></div>
+</section>
+
+<!-- Modal за преглед -->
+<div class="modal fade" id="laserModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content bg-transparent border-0">
+      <button type="button" class="btn btn-light ms-auto me-2 mt-2" data-bs-dismiss="modal">×</button>
+      <img id="laserModalImg" src="" alt="Preview" class="w-100 rounded-4 shadow">
+    </div>
+  </div>
+</div>
+
+ 
+
+ <!-- Footer -->
+<footer class="footer py-3" id="kontakt">
+  <div class="container mt-5">
+         <div class="row">
+      <div class="col-md-4 footer-logo mx-auto">
+        <img src="./images/logo.jpg" alt="PI Engineering Logo" class="footer-logo mb-3">
+      </div>
+      <div class="col-md-4 mb-4">
+        <h5 class="footer-title">PI Engineering GmbH</h5>
+        <p>Neumattstrasse 50<br>2562 Port</p>
+      </div>
+
+      <div class="col-md-4 mb-4">
+        <h5 class="footer-title">Kontakt</h5>
+        <p>+41 79 584 15 27<br>
+           <a href="mailto:info@pi-engineering.ch" class="footer-link">info@pi-engineering.ch</a>
+        </p>
+      </div>
+      </div>
+    </div>
+    <div class="text-center mt-3">
+      <small>&copy; 2025 PI Engineering GmbH. Alle Rechte vorbehalten.</small>
+    </div>
+  </div>
+</footer>
+     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+     <script>
+(() => {
+  const BASE = "./images/Laser/";  
+
+const files = [
+  "20211120_103939.jpg","20211120_104001.jpg","20211122_204232.jpg",
+  "20211223_174629.jpg","20211224_180039.jpg","20220111_180212.jpg",
+  "20220116_142633.jpg","20220206_160655.jpg","20220206_160807.jpg",
+  "20220211_172116.jpg","20220705_151704.jpg","20220706_094911.jpg",
+  "20220722_070915.jpg","20220811_061152.jpg","20221127_124531.jpg",
+  "20221127_125807.jpg","20221127_131032.jpg","20221127_131431.jpg",
+  "20221204_115621.jpg","20221204_115649.jpg",
+  "20240123_195925.jpg","20240124_185836.jpg","20240819_073152.jpg",
+  "IMG-20200902-WA0000.jpg","IMG-20210426-WA0002.jpeg",
+"IMG-20230206-WA0003.jpg"
+];
+
+  const grid = document.getElementById('laserGrid');
+ const makeCard = (name) => {
+  const safe = encodeURIComponent(name);
+  const src  = `${BASE}${safe}`;
+  return `
+    <div class="col-6 col-md-4 col-lg-3 laser-col">
+      <div class="laser-card" data-img="${src}">
+        <div class="laser-inner">
+          <div class="laser-face laser-front">
+            <img src="${src}" alt="">
+          </div>
+          <div class="laser-face laser-back">
+            <img src="${src}" alt="">
+          </div>
+        </div>
+      </div>
+    </div>`;
+};
+
+
+  grid.innerHTML = files.map(makeCard).join("");
+
+  // Modal preview on click
+  const modal = new bootstrap.Modal('#laserModal');
+  const modalImg = document.getElementById('laserModalImg');
+  grid.addEventListener('click', (e) => {
+    const card = e.target.closest('.laser-card');
+    if (!card) return;
+    modalImg.src = card.getAttribute('data-img');
+    modal.show();
+  });
+
+  // Clear src when modal closes (ослободи меморија)
+  document.getElementById('laserModal').addEventListener('hidden.bs.modal', () => {
+    modalImg.src = "";
+  });
+})();
+</script>
+
+  </body>
+  </body>
+</html>

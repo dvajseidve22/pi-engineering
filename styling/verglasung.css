@@ -1,0 +1,169 @@
+/* ============ Base ============ */
+:root{
+  --brand:#4c5dc3;
+  --ink:#ececee;
+  --ink-dim:#cfd1e8;
+}
+
+*{box-sizing:border-box}
+body{
+  font-family:'Roboto',sans-serif;
+  font-weight:700; /* како што го имаш */
+  margin:0;
+}
+
+/* ============ Navbar ============ */
+.bg-color{ background-color:var(--brand); }
+
+.logo{ height:150px!important; width:350px!important; }
+
+.navbar{ box-shadow:0 4px 6px -2px var(--ink); }
+.navbar img{ height:60px; width:200px; border-radius:10px; }
+.navbar .container-fluid{ display:flex; align-items:center; justify-content:space-between; }
+
+.navbar-toggler{ border-color:#fff; padding:.25rem .5rem; background:rgba(255,255,255,.08); border-radius:10px; box-shadow:none!important; }
+.navbar-toggler:focus{ box-shadow:none!important; }
+.navbar-toggler-icon{
+  background-image:url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='white' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+}
+
+.styled-nav{
+  color:var(--ink)!important;
+  font-size:21px;
+  border:2px solid var(--ink);
+  border-radius:10px;
+  padding:6px 18px;
+  display:inline-block;
+  min-width:150px;
+  text-align:center;
+  transition:all .3s ease-in-out;
+}
+.styled-nav:hover{
+  font-weight:700;
+  transform:scale(1.1);
+  box-shadow:0 4px 10px rgba(0,0,0,.3);
+  background-color:rgba(255,255,255,.1);
+  letter-spacing:1.7px;
+}
+
+/* Mobile navbar only */
+@media (max-width:991.98px){
+  .navbar-brand .logo{ height:56px!important; width:auto!important; }
+  .navbar img{ height:auto!important; width:auto!important; }
+
+  .navbar .container-fluid{ align-items:center; justify-content:space-between; gap:.75rem; }
+  .navbar-collapse{ padding-top:.5rem; }
+  .navbar-nav .nav-item{ margin:.25rem 0; }
+
+  .styled-nav{
+    display:block; width:100%; min-width:0;
+    font-size:18px; padding:10px 14px;
+    border:1px solid var(--ink); border-radius:12px;
+    color:var(--ink)!important; background:transparent; text-align:left;
+    transition:none!important; transform:none!important; box-shadow:none!important; letter-spacing:0!important;
+    font-weight:500;
+  }
+  .styled-nav:hover,.styled-nav:active,.styled-nav:focus{
+    background:rgba(255,255,255,.08); color:var(--ink)!important; border-color:var(--ink);
+    transition:none!important; transform:none!important; box-shadow:none!important; letter-spacing:0!important;
+  }
+
+  .btn-contact{
+    border:1px solid var(--ink)!important; color:var(--ink)!important; background:transparent!important;
+    width:100%; border-radius:12px; padding:10px 14px;
+  }
+}
+
+/* ============ HERO Banner (бели букви) ============ */
+.hero-banner{
+  position:relative;
+  min-height:52vh;
+  background:url("../images/Staklo/17.jpg") center/cover no-repeat fixed;
+  display:flex; align-items:stretch;
+}
+.hero-banner::before{
+  content:""; position:absolute; inset:0;
+  background:linear-gradient(180deg,rgba(0,0,0,.45),rgba(0,0,0,.25));
+}
+.hero-content{ position:relative; z-index:1; color:#fff; padding:2rem 0; }
+.hero-content h1,
+.hero-content p,
+.hero-content strong{ color:#fff!important; text-shadow:0 2px 12px rgba(0,0,0,.35); }
+
+.hero-content .btn{
+  border:1px solid var(--ink);
+  background:transparent;
+  color:#fff;
+  box-shadow:none;
+}
+.hero-content .btn:hover{
+  background:#fff;
+  color:var(--brand);
+}
+
+/* Помал херo на телефони */
+@media (max-width:991.98px){
+  .hero-banner{ min-height:40vh; background-attachment:scroll; }
+  .hero-content h1{ font-size:1.6rem; }
+  .hero-content p{ font-size:1rem; }
+}
+
+/* ============ Section titles / copy ============ */
+.media-txt{ color:#2f3d9b; letter-spacing:1.2px; font-weight:700; }
+section h2, section p, section li, section strong{ color:var(--brand); }
+
+/* ============ Carousels (галерии) ============ */
+.carousel-indicators [data-bs-target]{
+  background-color:var(--ink)!important;
+  width:12px; height:12px; border-radius:50%; opacity:1;
+}
+.carousel-indicators .active{ background-color:var(--brand)!important; }
+
+.media-carousel .carousel-item img{
+  width:100%; height:520px; object-fit:cover; background:#000;
+}
+.media-carousel .carousel-control-prev-icon,
+.media-carousel .carousel-control-next-icon{
+  filter:invert(51%) sepia(37%) saturate(2591%) hue-rotate(209deg) brightness(93%) contrast(95%);
+}
+
+/* Помал carousel на телефони */
+@media (max-width:575.98px){
+  .media-carousel .carousel-item img{ height:45vh; }
+}
+
+/* Ако користиш посебен galleryCarousel со contain */
+#galleryCarousel .carousel-item img{
+  max-height:65vh; object-fit:contain; background:#000;
+}
+
+/* ============ Video frame (ако го користиш) ============ */
+.video-frame{ height:320px; background:#000; }
+@media (min-width:768px){ .video-frame{ height:420px; } }
+@media (min-width:992px){ .video-frame{ height:520px; } }
+.video-frame video{ width:100%; height:100%; object-fit:contain; }
+
+/* ============ Footer ============ */
+.footer{
+  background-color:var(--brand);
+  color:var(--ink);
+  font-family:'Roboto',sans-serif;
+}
+.footer-title{ font-size:1.2rem; font-weight:700; margin-bottom:15px; }
+.footer-link{ color:var(--ink); text-decoration:none; transition:color .3s; }
+.footer p,.footer li{ font-size:1.3rem; line-height:1.6; }
+.footer-logo{ height:150px; width:300px; border-radius:10px; }
+
+/* Footer mobile */
+@media (max-width:991.98px){
+  footer.footer{ border-top:1px solid var(--ink); padding-top:1rem; }
+  footer.footer .container{ margin-top:1.5rem!important; }
+  footer.footer .row > [class*="col-"]{ text-align:center; margin-bottom:.75rem; }
+  footer.footer .footer-logo img,
+  footer.footer img.footer-logo{ height:56px; width:auto; border-radius:10px; }
+  footer.footer .footer-title{ color:var(--brand); margin-bottom:.25rem; font-weight:700; }
+  footer.footer .footer-link{ color:var(--brand); }
+  footer.footer .footer-link:hover{ text-decoration:underline; }
+  footer.footer p{ margin-bottom:.25rem; }
+  footer.footer .text-center small{ display:inline-block; margin-top:.5rem; }
+}
