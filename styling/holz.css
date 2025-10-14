@@ -9,6 +9,9 @@ body { font-family: 'Roboto', sans-serif; font-weight: bold; }
 .navbar-toggler-icon {
   background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='white' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
 }
+.navbar-brand img{
+  border-radius: 10px;
+}
 
 /* Desktop nav links */
 .styled-nav{
@@ -121,8 +124,8 @@ body { font-family: 'Roboto', sans-serif; font-weight: bold; }
 /* Partner секција – чисти лого димензии и убава поставеност */
 .partner-logos { row-gap: 10px; column-gap: 16px; }
 .partner-logo {
-  height: 56px;        
-  width: auto;
+  height: 100px;        
+  width: 120px;
   border-radius: 8px;     
   filter: grayscale(0%);  
   opacity: .95;

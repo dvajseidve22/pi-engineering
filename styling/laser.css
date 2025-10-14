@@ -48,6 +48,10 @@ body { font-family: 'Roboto', sans-serif; font-weight: bold; }
   }
 }
 
+.navbar-brand img{
+  border-radius: 10px;
+}
+
 /* Flip core */
 .laser-card{
   position:relative; border-radius:14px; overflow:hidden; perspective:1000px;
