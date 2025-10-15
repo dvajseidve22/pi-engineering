@@ -162,7 +162,7 @@ section h2, section p, section li, section strong{ color:var(--brand); }
   footer.footer .footer-logo img,
   footer.footer img.footer-logo{ height:56px; width:auto; border-radius:10px; }
   footer.footer .footer-title{ color:var(--brand); margin-bottom:.25rem; font-weight:700; }
-  footer.footer .footer-link{ color:var(--brand); }
+  footer.footer .footer-link{ color: #ececee;}
   footer.footer .footer-link:hover{ text-decoration:underline; }
   footer.footer p{ margin-bottom:.25rem; }
   footer.footer .text-center small{ display:inline-block; margin-top:.5rem; }

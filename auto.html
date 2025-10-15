@@ -9,9 +9,10 @@
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
       rel="stylesheet"
-      crossorigin="anonymous"/>
+      crossorigin="anonymous"
+    />
     <link rel="stylesheet" href="../styling/auto.css" />
-     <link rel="icon" href="./images/logo.jpg" sizes="16x16" type="image/png">
+    <link rel="icon" href="./images/logo.jpg" sizes="16x16" type="image/png" />
   </head>
 
   <body>
@@ -48,7 +49,9 @@
           </ul>
           <ul class="navbar-nav ms-auto">
             <li class="nav-item">
-              <a class="nav-link styled-nav btn-contact" href="#kontakt">Kontakt</a>
+              <a class="nav-link styled-nav btn-contact" href="#kontakt"
+                >Kontakt</a
+              >
             </li>
           </ul>
         </div>
@@ -236,6 +239,7 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
     <script type="module">
       import { supabase } from "./supabase-config.js";
 
@@ -247,15 +251,21 @@
       const carouselInner = document.getElementById("carouselInner");
       const carouselIndicators = document.getElementById("carouselIndicators");
 
-      function deCH(n) {
-        if (n == null || n === "") return "";
-        const num = Number(String(n).replace(/[^0-9.-]/g, ""));
+      // helpers
+      const chf = (v) => {
+        const n = Number(String(v ?? "").replace(/[^0-9.-]/g, ""));
+        return Number.isFinite(n)
+          ? "CHF " + new Intl.NumberFormat("de-CH").format(n)
+          : "";
+      };
+      const deCH = (n) => {
+        const num = Number(String(n ?? "").replace(/[^0-9.-]/g, ""));
         return Number.isFinite(num)
           ? new Intl.NumberFormat("de-CH").format(num)
-          : String(n);
-      }
-      function escapeHtml(s) {
-        return String(s ?? "").replace(
+          : String(n ?? "");
+      };
+      const escapeHtml = (s) =>
+        String(s ?? "").replace(
           /[&<>\"']/g,
           (c) =>
             ({
@@ -266,13 +276,13 @@
               "'": "&#39;",
             }[c])
         );
-      }
 
       async function loadPosts() {
         const { data: posts, error } = await supabase
           .from("posts")
           .select("*")
           .order("id", { ascending: false });
+
         if (error) {
           postsDiv.innerHTML =
             '<div class="alert alert-danger">' +
@@ -282,61 +292,78 @@
         }
 
         postsDiv.innerHTML = `
-          <div class="row g-4">
-            ${posts
-              .map((p) => {
-                const images = Array.isArray(p.images)
-                  ? p.images
-                  : p.images
-                  ? [p.images]
-                  : p.image
-                  ? [p.image]
-                  : [];
-                const firstImg = images[0] || "./images/logo.jpg";
-                const km = p.km ?? p.KM ?? null;
-                const year = p.year ?? p.YEAR ?? null;
-                const price = p.price ?? p.PRICE ?? null;
+      <div class="row g-4">
+        ${posts
+          .map((p) => {
+            const images = Array.isArray(p.images)
+              ? p.images
+              : p.images
+              ? [p.images]
+              : p.image
+              ? [p.image]
+              : [];
+            const firstImg = images[0] || "./images/logo.jpg";
 
-                const dataImages = encodeURIComponent(JSON.stringify(images));
-                const displayPrice = price ? "CHF " + escapeHtml(price) : "";
-                const meta = `${year ? year : ""}${year && km ? " | " : ""}${
-                  km ? deCH(km) + " km" : ""
-                }`;
+            const km = p.km ?? p.KM ?? null;
+            const year = p.year ?? p.YEAR ?? null;
+            const fuel = (p.fuel || "").trim();
+            const gearbox = (p.gearbox || "").trim();
 
-                return `
-              <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
-                <div class="ad-card"
-                     data-images="${dataImages}"
-                     data-title="${escapeHtml(p.title)}"
-                     data-desc="${escapeHtml(p.description ?? "")}"
-                     data-year="${year ?? ""}"
-                     data-km="${km ?? ""}"
-                     data-price="${escapeHtml(price ?? "")}">
-                  <img src="${firstImg}" class="ad-img" alt="${escapeHtml(
-                  p.title
-                )}" />
-                  <div class="ad-body">
-                    <h3 class="ad-title">${escapeHtml(p.title)}</h3>
-                    ${
-                      displayPrice
-                        ? `<div class="ad-price"> ${displayPrice} </div>`
-                        : ``
-                    }
-                    ${meta ? `<div class="ad-meta">${meta}</div>` : ``}
-                    ${
-                      p.description
-                        ? `<p class="ad-desc">${escapeHtml(p.description)}</p>`
-                        : ``
-                    }
-                    <button class="btn btn-primary ad-btn">Mehr anzeigen</button>
-                  </div>
+            const priceNumber =
+              p.price_num != null
+                ? Number(p.price_num)
+                : Number(String(p.price ?? "").replace(/[^0-9.-]/g, ""));
+            const priceDisplay = Number.isFinite(priceNumber)
+              ? chf(priceNumber)
+              : "";
+
+            // состави мета ред: Jahr | KM | Kraftstoff | Getriebe
+            const bits = [];
+            if (year) bits.push(year);
+            if (km) bits.push(deCH(km) + " km");
+            if (fuel) bits.push(escapeHtml(fuel));
+            if (gearbox) bits.push(escapeHtml(gearbox));
+            const meta = bits.join(" | ");
+
+            const dataImages = encodeURIComponent(JSON.stringify(images));
+
+            return `
+            <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
+              <div class="ad-card"
+                   data-images="${dataImages}"
+                   data-title="${escapeHtml(p.title)}"
+                   data-desc="${escapeHtml(p.description ?? "")}"
+                   data-year="${year ?? ""}"
+                   data-km="${km ?? ""}"
+                   data-price="${escapeHtml(priceDisplay)}"
+                   data-fuel="${escapeHtml(fuel)}"
+                   data-gearbox="${escapeHtml(gearbox)}">
+                <img src="${firstImg}" class="ad-img" alt="${escapeHtml(
+              p.title
+            )}" />
+                <div class="ad-body">
+                  <h3 class="ad-title">${escapeHtml(p.title)}</h3>
+                  ${
+                    priceDisplay
+                      ? `<div class="ad-price">${priceDisplay}</div>`
+                      : ``
+                  }
+                  ${meta ? `<div class="ad-meta">${meta}</div>` : ``}
+                  ${
+                    p.description
+                      ? `<p class="ad-desc">${escapeHtml(p.description)}</p>`
+                      : ``
+                  }
+                  <button class="btn btn-primary ad-btn">Mehr anzeigen</button>
                 </div>
-              </div>`;
-              })
-              .join("")}
-          </div>`;
+              </div>
+            </div>`;
+          })
+          .join("")}
+      </div>`;
       }
 
+      // open modal
       postsDiv.addEventListener("click", (e) => {
         const card = e.target.closest(".ad-card");
         if (!card) return;
@@ -346,6 +373,8 @@
         const year = card.dataset.year || "";
         const km = card.dataset.km || "";
         const price = card.dataset.price || "";
+        const fuel = card.dataset.fuel || "";
+        const gearbox = card.dataset.gearbox || "";
 
         let images = [];
         try {
@@ -356,16 +385,23 @@
 
         modalTitle.textContent = title;
         modalDesc.textContent = desc;
+
         const kmText = km ? `${deCH(km)} km` : "-";
         modalMeta.innerHTML = `
-          <div class="meta-line"><span class="meta-label">Jahr:</span> <strong>${
-            year || "-"
-          }</strong></div>
-          <div class="meta-line"><span class="meta-label">KM:</span> <strong>${kmText}</strong></div>
-          <div class="meta-line"><span class="meta-label">Preis:</span> <strong>${
-            price || "-"
-          }</strong></div>
-        `;
+      <div class="meta-line"><span class="meta-label">Jahr:</span> <strong>${
+        year || "-"
+      }</strong></div>
+      <div class="meta-line"><span class="meta-label">KM:</span> <strong>${kmText}</strong></div>
+      <div class="meta-line"><span class="meta-label">Kraftstoff:</span> <strong>${
+        fuel || "-"
+      }</strong></div>
+      <div class="meta-line"><span class="meta-label">Getriebe:</span> <strong>${
+        gearbox || "-"
+      }</strong></div>
+      <div class="meta-line"><span class="meta-label">Preis:</span> <strong>${
+        price || "-"
+      }</strong></div>
+    `;
 
         carouselInner.innerHTML = "";
         carouselIndicators.innerHTML = "";
@@ -376,13 +412,13 @@
           carouselInner.insertAdjacentHTML(
             "beforeend",
             `<div class="carousel-item ${active}">
-               <img src="${url}" class="d-block w-100" alt="">
-             </div>`
+           <img src="${url}" class="d-block w-100" alt="">
+         </div>`
           );
           carouselIndicators.insertAdjacentHTML(
             "beforeend",
             `<button type="button" data-bs-target="#postCarousel" data-bs-slide-to="${idx}" class="${active}"
-                     ${active ? 'aria-current="true"' : ""} aria-label="Slide ${
+                ${active ? 'aria-current="true"' : ""} aria-label="Slide ${
               idx + 1
             }"></button>`
           );
@@ -396,6 +432,7 @@
         carouselIndicators.innerHTML = "";
       });
 
+      // realtime
       supabase
         .channel("public:posts")
         .on(
@@ -415,23 +452,25 @@
     />
 
     <script>
-  (function(){
-    const el = document.querySelector('.listings-head.reveal');
-    if (!('IntersectionObserver' in window) || !el){
-      el && el.classList.add('is-visible'); 
-      return;
-    }
-    const io = new IntersectionObserver((entries, obs)=>{
-      entries.forEach(e=>{
-        if (e.isIntersecting){
-          e.target.classList.add('is-visible');
-          obs.unobserve(e.target);
+      (function () {
+        const el = document.querySelector(".listings-head.reveal");
+        if (!("IntersectionObserver" in window) || !el) {
+          el && el.classList.add("is-visible");
+          return;
         }
-      });
-    }, { threshold: .4 });
-    io.observe(el);
-  })();
-</script>
-
+        const io = new IntersectionObserver(
+          (entries, obs) => {
+            entries.forEach((e) => {
+              if (e.isIntersecting) {
+                e.target.classList.add("is-visible");
+                obs.unobserve(e.target);
+              }
+            });
+          },
+          { threshold: 0.4 }
+        );
+        io.observe(el);
+      })();
+    </script>
   </body>
 </html>

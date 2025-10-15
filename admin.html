@@ -4,128 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>Админ панел</title>
-    <style>
-      :root {
-        --bg: #0b1324;
-        --card: #121a2b;
-        --text: #e8eef9;
-        --muted: #9fb0d1;
-        --brand: #4c8dff;
-        --danger: #ff5c5c;
-      }
-      * {
-        box-sizing: border-box;
-      }
-      body {
-        margin: 0;
-        background: linear-gradient(180deg, #0b1324, #0f1a33);
-        font-family: ui-sans-serif, system-ui, Segoe UI, Arial;
-        color: var(--text);
-      }
-      header {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 16px 20px;
-        border-bottom: 1px solid #1d2742;
-      }
-      header h1 {
-        font-size: 18px;
-        margin: 0;
-      }
-      .btn {
-        padding: 10px 14px;
-        border-radius: 10px;
-        border: 1px solid #2a3a66;
-        background: transparent;
-        color: var(--muted);
-        cursor: pointer;
-      }
-      .btn.primary {
-        background: var(--brand);
-        color: #fff;
-        border: 0;
-      }
-      main {
-        max-width: 980px;
-        margin: 24px auto;
-        padding: 0 16px;
-        display: grid;
-        gap: 20px;
-      }
-      .card {
-        background: var(--card);
-        border: 1px solid #1d2742;
-        border-radius: 16px;
-        padding: 18px;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
-      }
-      .row {
-        display: grid;
-        gap: 12px;
-        grid-template-columns: 1fr 1fr;
-      }
-      .row-3 {
-        display: grid;
-        gap: 12px;
-        grid-template-columns: 1fr 1fr 1fr;
-      }
-      input,
-      textarea {
-        width: 100%;
-        padding: 12px;
-        border: 1px solid #22335b;
-        background: #0c1430;
-        color: var(--text);
-        border-radius: 10px;
-        outline: 0;
-      }
-      textarea {
-        min-height: 110px;
-        resize: vertical;
-      }
-      .grid {
-        display: grid;
-        gap: 12px;
-        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-      }
-      .post {
-        border: 1px solid #22335b;
-        border-radius: 12px;
-        overflow: hidden;
-        background: #0c1430;
-      }
-      .post img {
-        width: 100%;
-        height: 160px;
-        object-fit: cover;
-        display: block;
-      }
-      .post .p {
-        padding: 10px 12px;
-      }
-      .muted {
-        color: var(--muted);
-        font-size: 13px;
-      }
-      .danger {
-        color: #fff;
-        background: var(--danger);
-        border: 0;
-      }
-      .bar {
-        display: flex;
-        gap: 10px;
-        margin-top: 10px;
-      }
-      .meta {
-        display: flex;
-        gap: 12px;
-        font-size: 13px;
-        color: var(--muted);
-        margin-top: 6px;
-      }
-    </style>
+    <link rel="stylesheet" href="./styling/admin.css" />
   </head>
   <body>
     <header>
@@ -142,17 +21,21 @@
 
         <!-- Наслов + Слики -->
         <div class="row">
-          <input id="title" type="text" placeholder="Наслов" />
+          <input
+            id="title"
+            type="text"
+            placeholder="Наслов (пример KIA Picanto 1.2 GT)"
+          />
           <input id="image" type="file" accept="image/*" multiple />
         </div>
 
-        <!-- KM + Year + Опис -->
+        <!-- KM + Year + Цена (numeric CHF) -->
         <div class="row-3">
           <input
             id="km"
             type="number"
             inputmode="numeric"
-            placeholder="KM (пример 185000)"
+            placeholder="KM (пример 5420)"
             min="0"
             step="1"
           />
@@ -160,17 +43,43 @@
             id="year"
             type="number"
             inputmode="numeric"
-            placeholder="Година (пример 2018)"
+            placeholder="Година (пример 2024)"
             min="1980"
             max="2099"
             step="1"
           />
-          <input
-            id="price"
-            type="text"
-            placeholder="Цена (опц.) пример 7'900 CHF"
-          />
+          <div>
+            <input
+              id="price"
+              type="number"
+              inputmode="numeric"
+              placeholder="Цена во CHF (пример 23000)"
+              min="0"
+              step="100"
+            />
+            <div id="pricePreview" class="preview"></div>
+          </div>
         </div>
+
+        <!-- Гориво + Менувач -->
+        <div class="row-3">
+          <select id="fuel">
+            <option value="">Гориво (опц.)</option>
+            <option>Benzin</option>
+            <option>Diesel</option>
+            <option>Hybrid</option>
+            <option>Elektro</option>
+            <option>LPG</option>
+            <option>CNG</option>
+          </select>
+          <select id="gearbox">
+            <option value="">Менувач (опц.)</option>
+            <option>Manuell</option>
+            <option>Automatik</option>
+          </select>
+          <div></div>
+        </div>
+
         <textarea id="description" placeholder="Опис..."></textarea>
 
         <div class="bar">
@@ -196,11 +105,14 @@
       const kmInput = document.getElementById("km");
       const yearInput = document.getElementById("year");
       const priceInput = document.getElementById("price");
+      const pricePreview = document.getElementById("pricePreview");
+      const fuelInput = document.getElementById("fuel");
+      const gearboxInput = document.getElementById("gearbox");
       const fileInput = document.getElementById("image");
       const postsDiv = document.getElementById("posts");
       const msg = document.getElementById("msg");
 
-      // сесија (мора да е најавен)
+      // ===== auth =====
       const {
         data: { session },
       } = await supabase.auth.getSession();
@@ -212,28 +124,67 @@
         location.href = "login.html";
       };
 
+      // ===== helpers =====
+      const fmtCHF = (n) =>
+        Number.isFinite(n)
+          ? "CHF " +
+            new Intl.NumberFormat("de-CH", { maximumFractionDigits: 0 }).format(
+              n
+            )
+          : "";
+
+      const formatNumber = (n) => {
+        try {
+          return new Intl.NumberFormat("mk-MK").format(n);
+        } catch {
+          return String(n);
+        }
+      };
+
+      const escapeHtml = (s) =>
+        String(s ?? "").replace(
+          /[&<>\"']/g,
+          (c) =>
+            ({
+              "&": "&amp;",
+              "<": "&lt;",
+              ">": "&gt;",
+              '"': "&quot;",
+              "'": "&#39;",
+            }[c])
+        );
+
+      priceInput.addEventListener("input", () => {
+        const n = Number(priceInput.value || "");
+        pricePreview.textContent = fmtCHF(n);
+      });
+
+      // ===== create =====
       uploadBtn.onclick = async () => {
         msg.textContent = "";
         const title = titleInput.value.trim();
         const description = descInput.value.trim();
         const files = fileInput.files;
 
-        // новите полиња
         const kmValue = kmInput.value.trim()
           ? Number(kmInput.value.trim())
           : null;
         const yearValue = yearInput.value.trim()
           ? Number(yearInput.value.trim())
           : null;
-        const price = priceInput.value.trim() || null;
+        const priceVal = priceInput.value.trim()
+          ? Number(priceInput.value.trim())
+          : null;
+        const fuel = fuelInput.value || null;
+        const gearbox = gearboxInput.value || null;
 
         if (!title || !description || !files.length) {
           msg.textContent =
-            "Пополнете ги сите полиња (наслов, опис и најмалку една слика).";
+            "Пополнете ги задолжителните полиња (наслов, опис и слики).";
           return;
         }
 
-        // 1) Upload на сите слики
+        // upload images
         const imageUrls = [];
         for (const file of files) {
           const fileName = `${Date.now()}_${file.name}`.replace(/\s+/g, "_");
@@ -250,17 +201,17 @@
           imageUrls.push(urlData.publicUrl);
         }
 
-        // 2) Запис во базата
-        // Заб: ако колоната ти е создадена како "KM" со големи букви, ова ќе работи затоа што праќаме и km и KM.
+        // insert (користиме постоечка numeric 'price' колона)
         const payload = {
           title,
           description,
           images: imageUrls,
-          km: kmValue, // <— само km
-          year: yearValue, // <— само year
-          price,
+          km: kmValue,
+          year: yearValue,
+          price: priceVal,
+          fuel,
+          gearbox,
         };
-
         const { error: dbErr } = await supabase.from("posts").insert([payload]);
         if (dbErr) {
           msg.textContent = "DB грешка: " + dbErr.message;
@@ -273,78 +224,98 @@
         kmInput.value = "";
         yearInput.value = "";
         priceInput.value = "";
+        pricePreview.textContent = "";
+        fuelInput.value = "";
+        gearboxInput.value = "";
         fileInput.value = "";
         await loadPosts();
       };
 
+      // ===== read/list =====
       async function loadPosts() {
+        postsDiv.innerHTML = `<p class="muted">Вчитувам…</p>`;
         const { data: posts, error } = await supabase
           .from("posts")
-          .select("*")
+          .select("id,title,description,images,km,year,price,fuel,gearbox")
           .order("id", { ascending: false });
 
         if (error) {
-          postsDiv.innerHTML = `<p class="muted">${error.message}</p>`;
+          console.error("Supabase select error:", error);
+          postsDiv.innerHTML = `<p class="muted">Грешка: ${escapeHtml(
+            error.message
+          )}</p>`;
+          return;
+        }
+        if (!posts || posts.length === 0) {
+          postsDiv.innerHTML = `<p class="muted">Нема објави засега.</p>`;
           return;
         }
 
         postsDiv.innerHTML = posts
           .map((p) => {
-            const km = p.km ?? p.KM ?? null;
-            const year = p.year ?? p.YEAR ?? null;
+            const imgs = (
+              Array.isArray(p.images) ? p.images : [p.images || ""]
+            ).filter(Boolean);
+            const km = p.km ?? null;
+            const year = p.year ?? null;
+            const fuel = p.fuel || "";
+            const gbox = p.gearbox || "";
+
+            const priceHtml =
+              p.price != null && !Number.isNaN(Number(p.price))
+                ? `<span class="badge">${fmtCHF(Number(p.price))}</span>`
+                : "";
+
+            const fuelHtml = fuel
+              ? `<span class="badge">${escapeHtml(fuel)}</span>`
+              : "";
+            const gboxHtml = gbox
+              ? `<span class="badge">${escapeHtml(gbox)}</span>`
+              : "";
+
             return `
-            <article class="post">
-              ${(Array.isArray(p.images) ? p.images : [p.images || p.image])
-                .filter(Boolean)
-                .map((u) => `<img src="${u}" alt="">`)
-                .join("")}
-              <div class="p">
-                <strong>${escapeHtml(p.title)}</strong>
-                <div class="meta">
-                  ${year ? `<span>Год.: ${year}</span>` : ""}
-                  ${km !== null ? `<span>KM: ${formatNumber(km)}</span>` : ""}
-                  ${p.price ? `<span>Цена: ${escapeHtml(p.price)}</span>` : ""}
-                </div>
-                <p class="muted">${escapeHtml(p.description)}</p>
-                <div class="bar">
-                  <button class="btn danger" onclick="deletePost(${
-                    p.id
-                  })">Избриши</button>
-                </div>
-              </div>
-            </article>
-          `;
+        <article class="post">
+          ${imgs.map((u) => `<img src="${u}" alt="">`).join("")}
+          <div class="p">
+            <strong>${escapeHtml(p.title)}</strong>
+            <div class="meta">
+              ${year ? `<span>Год.: ${year}</span>` : ""}
+              ${km !== null ? `<span>KM: ${formatNumber(km)}</span>` : ""}
+              ${priceHtml}${fuelHtml}${gboxHtml}
+            </div>
+            <p class="muted">${escapeHtml(p.description)}</p>
+            <div class="bar">
+              <button class="btn danger" data-id="${p.id}">Избриши</button>
+            </div>
+          </div>
+        </article>`;
           })
           .join("");
+
+        // delete
+        postsDiv.querySelectorAll(".btn.danger").forEach((btn) => {
+          btn.addEventListener("click", async (e) => {
+            const id = Number(e.currentTarget.dataset.id);
+            if (!confirm("Сигурно сакаш да го избришеш постот?")) return;
+            const { error } = await supabase
+              .from("posts")
+              .delete()
+              .eq("id", id);
+            if (error) alert(error.message);
+            else loadPosts();
+          });
+        });
       }
 
-      window.deletePost = async (id) => {
-        if (!confirm("Сигурно сакаш да го избришеш постот?")) return;
-        const { error } = await supabase.from("posts").delete().eq("id", id);
-        if (error) alert(error.message);
-        else loadPosts();
-      };
-
-      function formatNumber(n) {
-        try {
-          return new Intl.NumberFormat("mk-MK").format(n);
-        } catch {
-          return String(n);
-        }
-      }
-      function escapeHtml(s) {
-        return String(s ?? "").replace(
-          /[&<>"']/g,
-          (c) =>
-            ({
-              "&": "&amp;",
-              "<": "&lt;",
-              ">": "&gt;",
-              '"': "&quot;",
-              "'": "&#39;",
-            }[c])
-        );
-      }
+      // realtime (правилна сигнатура)
+      supabase
+        .channel("public:posts")
+        .on(
+          "postgres_changes",
+          { event: "*", schema: "public", table: "posts" },
+          loadPosts
+        )
+        .subscribe();
 
       await loadPosts();
     </script>
