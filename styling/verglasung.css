@@ -5,11 +5,12 @@
   --ink-dim:#cfd1e8;
 }
 
-*{box-sizing:border-box}
+*{ box-sizing:border-box }
 body{
   font-family:'Roboto',sans-serif;
-  font-weight:700; /* како што го имаш */
+  font-weight:700;
   margin:0;
+  text-rendering:optimizeLegibility;
 }
 
 /* ============ Navbar ============ */
@@ -36,14 +37,14 @@ body{
   display:inline-block;
   min-width:150px;
   text-align:center;
-  transition:all .3s ease-in-out;
+  transition:transform .25s ease, box-shadow .25s ease, letter-spacing .25s ease;
 }
 .styled-nav:hover{
   font-weight:700;
-  transform:scale(1.1);
+  transform:translateY(-1px) scale(1.04);
   box-shadow:0 4px 10px rgba(0,0,0,.3);
   background-color:rgba(255,255,255,.1);
-  letter-spacing:1.7px;
+  letter-spacing:1.1px;
 }
 
 /* Mobile navbar only */
@@ -65,7 +66,6 @@ body{
   }
   .styled-nav:hover,.styled-nav:active,.styled-nav:focus{
     background:rgba(255,255,255,.08); color:var(--ink)!important; border-color:var(--ink);
-    transition:none!important; transform:none!important; box-shadow:none!important; letter-spacing:0!important;
   }
 
   .btn-contact{
@@ -80,6 +80,7 @@ body{
   min-height:52vh;
   background:url("../images/Staklo/17.jpg") center/cover no-repeat fixed;
   display:flex; align-items:stretch;
+  contain:paint; /* small perf win */
 }
 .hero-banner::before{
   content:""; position:absolute; inset:0;
@@ -119,29 +120,27 @@ section h2, section p, section li, section strong{ color:var(--brand); }
 }
 .carousel-indicators .active{ background-color:var(--brand)!important; }
 
+/* reserve space to reduce CLS */
 .media-carousel .carousel-item img{
-  width:100%; height:520px; object-fit:cover; background:#000;
+  width:100%;
+  height:520px;
+  object-fit:cover;
+  background:#000;
+  contain:content;
 }
+
 .media-carousel .carousel-control-prev-icon,
 .media-carousel .carousel-control-next-icon{
   filter:invert(51%) sepia(37%) saturate(2591%) hue-rotate(209deg) brightness(93%) contrast(95%);
 }
 
-/* Помал carousel на телефони */
 @media (max-width:575.98px){
   .media-carousel .carousel-item img{ height:45vh; }
 }
 
-/* Ако користиш посебен galleryCarousel со contain */
 #galleryCarousel .carousel-item img{
   max-height:65vh; object-fit:contain; background:#000;
 }
-
-/* ============ Video frame (ако го користиш) ============ */
-.video-frame{ height:320px; background:#000; }
-@media (min-width:768px){ .video-frame{ height:420px; } }
-@media (min-width:992px){ .video-frame{ height:520px; } }
-.video-frame video{ width:100%; height:100%; object-fit:contain; }
 
 /* ============ Footer ============ */
 .footer{
@@ -150,7 +149,7 @@ section h2, section p, section li, section strong{ color:var(--brand); }
   font-family:'Roboto',sans-serif;
 }
 .footer-title{ font-size:1.2rem; font-weight:700; margin-bottom:15px; }
-.footer-link{ color:var(--ink); text-decoration:none; transition:color .3s; }
+.footer-link{ color:var(--ink); text-decoration:none; transition:color .2s; }
 .footer p,.footer li{ font-size:1.3rem; line-height:1.6; }
 .footer-logo{ height:150px; width:300px; border-radius:10px; }
 
@@ -162,8 +161,14 @@ section h2, section p, section li, section strong{ color:var(--brand); }
   footer.footer .footer-logo img,
   footer.footer img.footer-logo{ height:56px; width:auto; border-radius:10px; }
   footer.footer .footer-title{ color:var(--brand); margin-bottom:.25rem; font-weight:700; }
-  footer.footer .footer-link{ color: #ececee;}
+  footer.footer .footer-link{ color:#ececee; }
   footer.footer .footer-link:hover{ text-decoration:underline; }
   footer.footer p{ margin-bottom:.25rem; }
   footer.footer .text-center small{ display:inline-block; margin-top:.5rem; }
+}
+
+/* Respect reduced motion: stop transitions */
+@media (prefers-reduced-motion: reduce){
+  .styled-nav{ transition:none !important; }
+  .styled-nav:hover{ transform:none !important; box-shadow:none !important; letter-spacing:0 !important; }
 }
