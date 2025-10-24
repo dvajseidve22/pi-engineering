@@ -152,6 +152,9 @@ body{
   max-height:60vh; object-fit:contain; background:#0b1324; border-radius:10px;
 }
 
+.ad-desc { line-height: 1.5; }
+
+
 /* Desktop only enforce 70% */
 @media (min-width:992px){
   .modal-dialog.modal-xl{ max-width:70%; }

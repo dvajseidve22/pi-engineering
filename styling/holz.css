@@ -77,11 +77,12 @@ body { font-family: 'Roboto', sans-serif; font-weight: bold; }
 .holz-chip{ background:#ececee; color:#4c5dc3; border:1px solid #4c5dc3; }
 
 /* ===== Big unified slider ===== */
-#drvo-all .carousel-item img{
-  width:100%;
-  height:520px;         
-  object-fit:cover;
-  background:#000;
+#drvo-all .carousel-item img {
+  display: block;
+  width: 100%;
+  height: auto;             /* ги прави последните 5 да се гледаат правилно */
+  max-height: 520px;        /* за да не се растегнуваат прекумерно */
+  object-fit: contain;      /* целата слика внатре без сечење */        /* убава рамка ако има празно место */
 }
 #drvo-all .carousel-indicators [data-bs-target]{ background:#ececee; }
 #drvo-all .carousel-indicators .active{ background:#4c5dc3; }
