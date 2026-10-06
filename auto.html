@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="de-CH">
   <head>
     <meta charset="UTF-8" />
@@ -45,6 +45,9 @@
             </li>
             <li class="nav-item mx-2">
               <a class="nav-link styled-nav" href="auto.html">Auto</a>
+            </li>
+            <li class="nav-item mx-2">
+              <a class="nav-link styled-nav" href="wines.html">Wines</a>
             </li>
           </ul>
           <ul class="navbar-nav ms-auto">
@@ -274,7 +277,7 @@
               ">": "&gt;",
               '"': "&quot;",
               "'": "&#39;",
-            }[c])
+            })[c],
         );
 
       async function loadPosts() {
@@ -298,10 +301,10 @@
           const images = Array.isArray(p.images)
             ? p.images
             : p.images
-            ? [p.images]
-            : p.image
-            ? [p.image]
-            : [];
+              ? [p.images]
+              : p.image
+                ? [p.image]
+                : [];
           const firstImg = images[0] || "./images/logo.jpg";
 
           const km = p.km ?? p.KM ?? null;
@@ -338,8 +341,8 @@
                  data-fuel="${escapeHtml(fuel)}"
                  data-gearbox="${escapeHtml(gearbox)}">
               <img src="${firstImg}" class="ad-img" alt="${escapeHtml(
-            p.title
-          )}" />
+                p.title,
+              )}" />
               <div class="ad-body">
                 <h3 class="ad-title">${escapeHtml(p.title)}</h3>
                 ${
@@ -352,7 +355,7 @@
                  p.description
                    ? `<p class="ad-desc">${escapeHtml(p.description).replace(
                        /\r?\n/g,
-                       "<br>"
+                       "<br>",
                      )}</p>`
                    : ``
                }
@@ -418,14 +421,14 @@
             "beforeend",
             `<div class="carousel-item ${active}">
          <img src="${url}" class="d-block w-100" alt="">
-       </div>`
+       </div>`,
           );
           carouselIndicators.insertAdjacentHTML(
             "beforeend",
             `<button type="button" data-bs-target="#postCarousel" data-bs-slide-to="${idx}" class="${active}"
             ${active ? 'aria-current="true"' : ""} aria-label="Slide ${
               idx + 1
-            }"></button>`
+            }"></button>`,
           );
         });
 
@@ -443,7 +446,7 @@
         .on(
           "postgres_changes",
           { event: "*", schema: "public", table: "posts" },
-          loadPosts
+          loadPosts,
         )
         .subscribe();
 
@@ -472,7 +475,7 @@
               }
             });
           },
-          { threshold: 0.4 }
+          { threshold: 0.4 },
         );
         io.observe(el);
       })();
